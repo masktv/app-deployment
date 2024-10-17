@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: masktv-mysql-statefulset
+  labels:
+    app: masktv-mysql
+spec:
+  serviceName: "masktv-mysql-service"
+  replicas: 2
+  selector:
+    matchLabels:
+      app: masktv-mysql
+  template:
+    metadata:
+      labels:
+        app: masktv-mysql
+    spec:
+      containers:
+        - name: masktv-mysql-container
+          image: mysql:latest
+          ports:
+            - containerPort: 3306
+              name: mysql
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 500m
+              memory: 512Mi
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: database-secrets
+                  key: MYSQL_ROOT_PASSWORD
+            - name: MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: database-secrets
+                  key: MYSQL_DATABASE
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: database-secrets
+                  key: MYSQL_USER
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: database-secrets
+                  key: MYSQL_PASSWORD
+          volumeMounts:
+            - name: masktv-mysql-pv
+              mountPath: /var/lib/mysql
+  volumeClaimTemplates:
+    - metadata:
+        name: masktv-mysql-pv
+      spec:
+        accessModes:
+          - ReadWriteOnce  # Change to ReadWriteOnce if necessary
+        storageClassName: ""  # Specify the storage class or leave empty for the default
+        resources:
+          requests:
+            storage: 2Gi  # Set according to your database size
+        volumeMode: Filesystem
+  updateStrategy:
+    type: RollingUpdate
