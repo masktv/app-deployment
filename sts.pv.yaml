@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: masktv-mysql-pv
+spec:
+  capacity:
+    storage: 2Gi  # Specify the storage size
+  accessModes:
+    - ReadWriteOnce  # Change as necessary
+  persistentVolumeReclaimPolicy: Retain  # Options: Retain, Recycle, Delete
+  storageClassName: ""  # Specify the storage class if needed
+  hostPath:  # Example for local development; use appropriate storage type for production
+    path: /mnt/data/masktv-mysql
