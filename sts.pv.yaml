@@ -10,7 +10,7 @@ spec:
     storage: 2Gi        # Set according to your application's storage needs
   volumeMode: Filesystem
   accessModes:
-    - ReadWriteMany     # Allows multiple Pods to read and write simultaneously
+    - ReadWriteOnce     # Allows multiple Pods to read and write simultaneously
   persistentVolumeReclaimPolicy: Retain  # Set to Recycle or Retain based on needs
   local:
     path: /mnt/deployment-efs/db  # Ensure this directory exists on the node
