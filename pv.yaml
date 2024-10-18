@@ -14,7 +14,7 @@ spec:
     - ReadWriteOnce      # Each Pod needs its own volume
   persistentVolumeReclaimPolicy: Retain  # Set to Recycle or Retain based on needs
   local:
-    path: /mnt/deployment-efs/db-0  # Ensure this directory exists on the node
+    path: /mnt/efs/db-0  # Ensure this directory exists on the node
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -39,7 +39,7 @@ spec:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   local:
-    path: /mnt/deployment-efs/db-1  # Ensure this directory exists on the node
+    path: /mnt/efs/db-1  # Ensure this directory exists on the node
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -64,7 +64,7 @@ spec:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   local:
-    path: /mnt/deployment-efs/db-2  # Ensure this directory exists on the node
+    path: /mnt/efs/db-2  # Ensure this directory exists on the node
   nodeAffinity:
     required:
       nodeSelectorTerms:
