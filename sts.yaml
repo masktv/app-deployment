@@ -26,6 +26,11 @@ spec:
             requests:
               cpu: 500m
               memory: 512Mi
+          volumeMounts:
+            - name: masktv-mysql-pvc-0  # For the first pod
+              mountPath: /var/lib/mysql
+            - name: masktv-mysql-pvc-1  # For the second pod
+              mountPath: /var/lib/mysql
           env:
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
@@ -47,19 +52,15 @@ spec:
                 secretKeyRef:
                   name: database-secrets
                   key: MYSQL_PASSWORD
-          volumeMounts:
-            - name: masktv-mysql-pv
-              mountPath: /var/lib/mysql
-  volumeClaimTemplates:
-    - metadata:
-        name: masktv-mysql-pv
-      spec:
-        accessModes:
-          - ReadWriteOnce  # Change to ReadWriteOnce if necessary
-        storageClassName: ""  # Specify the storage class or leave empty for the default
-        resources:
-          requests:
-            storage: 2Gi  # Set according to your database size
-        volumeMode: Filesystem
+      volumes:
+        - name: masktv-mysql-pvc-0
+          persistentVolumeClaim:
+            claimName: masktv-mysql-pvc-0  # Reference to the existing PVC
+        - name: masktv-mysql-pvc-1
+          persistentVolumeClaim:
+            claimName: masktv-mysql-pvc-1  # Reference to the existing PVC
   updateStrategy:
     type: RollingUpdate
+    rollingUpdate:
+      partition: 0  # State can be managed by partitioning.
+
