@@ -23,3 +23,16 @@ spec:
       storage: 2Gi
   volumeMode: Filesystem
   volumeName: masktv-mysql-pv-1  # Specify the PV name to bind to
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: masktv-mysql-pvc-1
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+  volumeMode: Filesystem
+  volumeName: masktv-mysql-pv-2
