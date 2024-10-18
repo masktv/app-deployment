@@ -31,7 +31,7 @@ spec:
               mountPath: /var/lib/mysql
             - name: masktv-mysql-pvc-1  # For the second pod
               mountPath: /var/lib/mysql
-            - name: masktv-mysql-pvc-1  # For the second pod
+            - name: masktv-mysql-pvc-2  # For the second pod
               mountPath: /var/lib/mysql              
           env:
             - name: MYSQL_ROOT_PASSWORD
