@@ -1,0 +1,75 @@
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: masktv-mysql-pv-0  # Updated name for clarity
+  labels:
+    app: masktv-mysql
+spec:
+  storageClassName: ""  # Specify a storage class or leave empty for default
+  capacity:
+    storage: 2Gi        # Set according to your application's storage needs
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce      # Each Pod needs its own volume
+  persistentVolumeReclaimPolicy: Retain  # Set to Recycle or Retain based on needs
+  local:
+    path: /mnt/deployment-efs/db-0  # Ensure this directory exists on the node
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+            - Masktv-OTT  # Ensure this matches your node's hostname
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: masktv-mysql-pv-1  # Second PV for the second replica
+  labels:
+    app: masktv-mysql
+spec:
+  storageClassName: ""
+  capacity:
+    storage: 2Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  local:
+    path: /mnt/deployment-efs/db-1  # Ensure this directory exists on the node
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+            - Masktv-OTT
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: masktv-mysql-pv-2  # Third PV for the third replica
+  labels:
+    app: masktv-mysql
+spec:
+  storageClassName: ""
+  capacity:
+    storage: 2Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  local:
+    path: /mnt/deployment-efs/db-2  # Ensure this directory exists on the node
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+            - Masktv-OTT
