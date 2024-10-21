@@ -89,7 +89,7 @@ spec:
     spec:
       storageClassName: sts-efs-sclass
       accessModes: 
-        - ReadWriteOnce
+        - ReadWriteMany
       resources:
         requests:
           storage: 2Gi
