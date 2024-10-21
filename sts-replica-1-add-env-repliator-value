@@ -69,19 +69,13 @@ spec:
         volumeMounts:
         - name: mysql-storage
           mountPath: /var/lib/mysql
-        - name: config
-          mountPath: /etc/mysql/my.cnf
-          subPath: my.cnf
-      volumes:
-      - name: config
-        configMap:
-          name: mysql-config
   volumeClaimTemplates:
   - metadata:
       name: mysql-storage
     spec:
+      volumeMode: Filesystem
       accessModes: [ "ReadWriteOnce" ]
+      storageClassName: 
       resources:
         requests:
           storage: 5Gi
-      storageClassName: your-storage-class # Adjust as necessary
