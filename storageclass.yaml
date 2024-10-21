@@ -5,3 +5,9 @@ metadata:
 provisioner: efs.csi.aws.com
 reclaimPolicy: Retain
 volumeBindingMode: Immediate
+parameters:
+  provisioner: efs.csi.aws.com
+  fileSystemId: your-efs-file-system-id  # Replace with your actual EFS ID
+  # Optional parameters
+  # Directory: This is the path in EFS where volumes will be created.
+  directory: /path/to/your/directory # Optional, defaults to root if not specified
