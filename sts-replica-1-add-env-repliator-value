@@ -22,8 +22,8 @@ spec:
         - /bin/sh
         - -c
         - |
-          if [ $(hostname) != "mysql-0" ]; then
-            MASTER_HOST=mysql-0.mysql;
+          if [ $(hostname) != "masktv-mysql-statefulset-0" ]; then
+            MASTER_HOST=masktv-mysql-statefulset-0.masktv-mysql-statefulset;
             MASTER_USER=${MYSQL_USER};  # Using the Secret variable
             MASTER_PASSWORD=${MYSQL_PASSWORD};  # Using the Secret variable
 
@@ -49,7 +49,7 @@ spec:
             "
           fi
       containers:
-      - name: masktv-mysql-container
+      - name:  masktv-mysql-statefulset
         image: .....................
         ports:
           - containerPort: 3306
