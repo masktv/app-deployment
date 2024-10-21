@@ -23,7 +23,7 @@ spec:
         - -c
         - |
           if [ $(hostname) != "masktv-mysql-statefulset-0" ]; then
-            MASTER_HOST=masktv-mysql-statefulset-0.masktv-mysql-statefulset;
+            MASTER_HOST=masktv-mysql-statefulset-0.masktv-mysql-statefulset.default.svc.cluster.local;
             MASTER_USER=${MYSQL_USER};  # Using the Secret variable
             MASTER_PASSWORD=${MYSQL_PASSWORD};  # Using the Secret variable
 
