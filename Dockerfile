@@ -1,11 +1,5 @@
 FROM mysql:latest
 
-# Environment variables
-ENV MYSQL_ROOT_PASSWORD=
-ENV MYSQL_DATABASE=
-ENV MYSQL_USER=
-ENV MYSQL_PASSWORD=
-
 RUN mkdir -p /etc/mysql/conf.d
 
 # Copy statefulset replication configuration file 
