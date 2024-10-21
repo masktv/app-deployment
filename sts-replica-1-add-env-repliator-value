@@ -1,21 +1,23 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: mysql
+  name: masktv-mysql-statefulset
+  labels:
+    app: masktv-mysql
 spec:
-  serviceName: "mysql"
-  replicas: 3
+  serviceName: "masktv-mysql-service"
+  replicas: 5
   selector:
     matchLabels:
-      app: mysql
+      app: masktv-mysql
   template:
     metadata:
       labels:
-        app: mysql
+        app: masktv-mysql
     spec:
       initContainers:
       - name: init-replication
-        image: mysql:5.7
+        image: ...............
         command:
         - /bin/sh
         - -c
@@ -47,31 +49,43 @@ spec:
             "
           fi
       containers:
-      - name: mysql
-        image: mysql:5.7
-        env:
-        - name: MYSQL_ROOT_PASSWORD
-          value: your_root_password
-        - name: MYSQL_DATABASE
-          value: your_database_name
-        - name: MYSQL_USER
-          valueFrom:
-            secretKeyRef:
-              name: mysql-secret
-              key: mysql-user          # Reference to the Secret
-        - name: MYSQL_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: mysql-secret
-              key: mysql-password      # Reference to the Secret
+      - name: masktv-mysql-container
+        image: .....................
         ports:
-        - containerPort: 3306
+          - containerPort: 3306
+            name: mysql
+            protocol: TCP
+        resources: 
+          requests: 
+            cpu: 200m
+            memory: 100Mi
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: database-secrets
+                key: MYSQL_ROOT_PASSWORD
+          - name: MYSQL_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: database-secrets
+                key: MYSQL_DATABASE
+          - name: MYSQL_USER
+            valueFrom:
+              secretKeyRef:
+                name: database-secrets
+                key: MYSQL_USER
+          - name: MYSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: database-secrets
+                key: MYSQL_PASSWORD
         volumeMounts:
-        - name: mysql-storage
+        - name: masktv-mysql-pv
           mountPath: /var/lib/mysql
   volumeClaimTemplates:
   - metadata:
-      name: mysql-storage
+      name: masktv-mysql-pv
     spec:
       volumeMode: Filesystem
       accessModes: [ "ReadWriteOnce" ]
@@ -79,3 +93,8 @@ spec:
       resources:
         requests:
           storage: 5Gi
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 2
