@@ -88,9 +88,7 @@ spec:
       name: masktv-mysql-pv
     spec:
       accessModes:
-        - ReadWriteMany  # EFS supports ReadWriteMany
       resources:
         requests:
           storage: 2Gi
       storageClassName: efs-sc  # Use a storage class for EFS
-      volumeMode: Filesystem
