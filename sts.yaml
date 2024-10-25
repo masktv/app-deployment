@@ -87,8 +87,8 @@ spec:
   - metadata:
       name: masktv-mysql-pv
     spec:
-      accessModes:
+      accessModes:  [ "ReadWriteOnce" ]
       resources:
         requests:
           storage: 2Gi
-      storageClassName: efs-sc  # Use a storage class for EFS
+      storageClassName: masktv-storage-class  # Use a storage class for EFS
