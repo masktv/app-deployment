@@ -87,9 +87,10 @@ spec:
   - metadata:
       name: masktv-mysql-pv
     spec:
-      storageClassName: sts-efs-sclass
-      accessModes: 
-        - ReadWriteOnce
+      accessModes:
+        - ReadWriteMany  # EFS supports ReadWriteMany
       resources:
         requests:
           storage: 2Gi
+      storageClassName: efs-sc  # Use a storage class for EFS
+      volumeMode: Filesystem
