@@ -6,5 +6,5 @@ provisioner: kubernetes.io/aws-ebs  # Change to your desired provisioner
 reclaimPolicy: Retain
 volumeBindingMode: Immediate
 parameters:
-  type: gp2  # Example parameter for AWS EBS
-      # Filesystem type to format the volume with
+  type: gp2  
+  fsType: ext4      
