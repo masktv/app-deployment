@@ -81,11 +81,11 @@ spec:
                 name: database-secrets
                 key: MYSQL_PASSWORD
         volumeMounts:
-        - name: masktv-mysql-pv
+        - name: masktv-mysql-pvc
           mountPath: /var/lib/mysql
   volumeClaimTemplates:
   - metadata:
-      name: masktv-mysql-pv
+      name: masktv-mysql-pvc
     spec:
       accessModes:  [ "ReadWriteOnce" ]
       resources:
