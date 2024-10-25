@@ -83,6 +83,12 @@ spec:
         volumeMounts:
         - name: masktv-mysql-pvc
           mountPath: /var/lib/mysql
+        - name: mysql-backup-volume
+          mountPath: /mnt
+  volumes:
+  - name: mysql-backup-volume
+    hostPath:
+      path: /mnt/MYSQL_BACKUP
   volumeClaimTemplates:
   - metadata:
       name: masktv-mysql-pvc
