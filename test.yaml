@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: masktv-mysql-statefulset
+  labels:
+    app: masktv-mysql
+spec:
+  serviceName: "masktv-mysql-service"
+  replicas: 4
+  selector:
+    matchLabels:
+      app: masktv-mysql
+  template:
+    metadata:
+      labels:
+        app: masktv-mysql
+    spec:
+      containers:
+      - name:  masktv-mysql-statefulset
+        image: masktv/masktv:dbsql
+        ports:
+          - containerPort: 3306
+            name: mysql
+            protocol: TCP
+        resources: 
+          requests: 
+            cpu: 200m
+            memory: 100Mi
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: database-secrets
+                key: MYSQL_ROOT_PASSWORD
+          - name: MYSQL_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: database-secrets
+                key: MYSQL_DATABASE
+          - name: MYSQL_USER
+            valueFrom:
+              secretKeyRef:
+                name: database-secrets
+                key: MYSQL_USER
+          - name: MYSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: database-secrets
+                key: MYSQL_PASSWORD
+        volumeMounts:
+        - name: masktv-mysql-pvc
+          mountPath: /var/lib/mysql
+        - name: mysql-backup-volume
+          mountPath: /mnt
+      volumes:
+       - name: mysql-backup-volume
+         hostPath:
+          path: /mnt/MYSQL_BACKUP
+  volumeClaimTemplates:
+  - metadata:
+      name: masktv-mysql-pvc
+    spec:
+      accessModes:  [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 2Gi
+      storageClassName: standard  # Use a storage class for EFS
