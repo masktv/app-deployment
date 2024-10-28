@@ -7,4 +7,4 @@ parameters:
   type: gp2  # For AWS, specify the EBS type (gp2, gp3, io1, etc.)
   fsType: ext4
 reclaimPolicy: Retain  # Change to Retain if you want to keep PVs after PVC deletion
-volumeBindingMode: WaitForFirstConsumer  # This mode delays volume binding until a pod uses it
+volumeBindingMode: Immediate # This mode delays volume binding until a pod uses it
