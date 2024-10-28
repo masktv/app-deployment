@@ -2,7 +2,7 @@ apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: masktv-storage-class  # Replace with your desired name
-provisioner: kubernetes.io/aws-ebs  # Replace with your provisioner's name, e.g., for GCP use "kubernetes.io/gce-pd"
+provisioner: ebs.csi.aws.com  # Replace with your provisioner's name, e.g., for GCP use "kubernetes.io/gce-pd"
 parameters:
   type: gp2  # For AWS, specify the EBS type (gp2, gp3, io1, etc.)
   fsType: ext4
