@@ -81,17 +81,8 @@ spec:
                 name: database-secrets
                 key: MYSQL_PASSWORD
         volumeMounts:
-          # database volume
         - name: masktv-mysql-pvc
           mountPath: /var/lib/mysql
-          # database backup volume
-        - name: mysql-backup-volume
-          mountPath: /mnt
-  # volume of database backup 
-  volumes:
-  - name: mysql-backup-volume
-    hostPath:
-      path: /mnt/MYSQL/Database
   volumeClaimTemplates:
   - metadata:
       name: masktv-mysql-pvc
