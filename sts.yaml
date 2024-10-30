@@ -83,6 +83,12 @@ spec:
         volumeMounts:
         - name: masktv-mysql-pvc
           mountPath: /var/lib/mysql
+        - name: .........
+          mountPath: /var/log/mysql
+      volumes:
+      - name: .........
+        persistentVolumeClaim:
+          claimName: ........
   volumeClaimTemplates:
   - metadata:
       name: masktv-mysql-pvc
