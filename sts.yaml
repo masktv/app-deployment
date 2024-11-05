@@ -83,7 +83,7 @@ spec:
         volumeMounts:
         - name: masktv-mysql-pvc
           mountPath: /var/lib/mysql
-        - name: .........
+        - name: db-log-pv
           mountPath: /var/log/mysql
       volumes:
       - name: db-log-pv
