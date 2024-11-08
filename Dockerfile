@@ -1,9 +1,5 @@
 FROM mysql:latest
 
-RUN mkdir -p /etc/mysql/conf.d
-
-# Copy statefulset replication configuration file 
-COPY ./custom-mysql.cnf /etc/mysql/conf.d/custom-mysql.cnf
 
 # Expose the MySQL port
 EXPOSE 3306
