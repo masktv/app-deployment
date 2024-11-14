@@ -5,7 +5,7 @@ FROM mysql:latest
 EXPOSE 3306
 
 # Copy init.sql script file to allow dbuser on database to connect from any host.
-COPY ./newdb.sql /docker-entrypoint-initdb.d/
+COPY ./init.sql /docker-entrypoint-initdb.d/
 
 # Use ENTRYPOINT to set the entrypoint script
 ENTRYPOINT ["docker-entrypoint.sh"]
