@@ -4,9 +4,11 @@ FROM mysql:latest
 # Expose the MySQL port
 EXPOSE 3306
 
+# Copy init.sql script file to allow dbuser on database to connect from any host.
+COPY ./newdb.sql /docker-entrypoint-initdb.d/
+
 # Use ENTRYPOINT to set the entrypoint script
-#if contaner getting restart or dsplay error, run with uncomment below line
-#ENTRYPOINT ["docker-entrypoint.sh"]
+ENTRYPOINT ["docker-entrypoint.sh"]
 
 # Specify CMD to start MySQL server
 CMD ["mysqld"]
