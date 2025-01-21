@@ -1,36 +1,26 @@
-# Use the official MySQL image as a base
+
 FROM mysql:latest
 
-# Expose MySQL port
+# Expose the MySQL port
 EXPOSE 3306
 
-# Set default command to start MySQL
-CMD ["mysqld"]
-
-
-#.................................
-#FROM mysql:latest
-
-# Expose the MySQL port
-#EXPOSE 3306
-
 # Argument to hold env value from docker build cammand
-#ARG MYSQL_DATABASE
-#ARG MYSQL_USER
-#ARG MYSQL_PASSWORD
-#ARG MYSQL_ROOT_PASSWORD
+ARG MYSQL_DATABASE
+ARG MYSQL_USER
+ARG MYSQL_PASSWORD
+ARG MYSQL_ROOT_PASSWORD
 
 # env value from argument
-#ENV MYSQL_DATABASE=${MYSQL_DATABASE}
-#ENV MYSQL_USER=${MYSQL_USER}
-#ENV MYSQL_PASSWORD=${MYSQL_PASSWORD}
-#ENV MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+ENV MYSQL_DATABASE=${MYSQL_DATABASE}
+ENV MYSQL_USER=${MYSQL_USER}
+ENV MYSQL_PASSWORD=${MYSQL_PASSWORD}
+ENV MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
 
 # Copy init.sql script file to allow dbuser on database to connect from any host.
-#COPY ./init.sql /docker-entrypoint-initdb.d/
+COPY ./init.sql /docker-entrypoint-initdb.d/
 
 # Use ENTRYPOINT to set the entrypoint script
-#ENTRYPOINT ["docker-entrypoint.sh"]
+ENTRYPOINT ["docker-entrypoint.sh"]
 
 # Specify CMD to start MySQL server
-#CMD ["mysqld"]
+CMD ["mysqld"]
