@@ -1,5 +1,5 @@
 # Use the official MySQL image as a base
-FROM mysql:8.0
+FROM mysql:latest
 
 # Expose MySQL port
 EXPOSE 3306
