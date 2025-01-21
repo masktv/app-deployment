@@ -1,0 +1,2 @@
+write req host :- masktv-mysql-statefulset-0.masktv-mysql-service.default.svc.cluster.local --> that sent all request on only -0 pod.
+read req host :- masktv-mysql-service.default.svc.cluster.local --> that sent al readd request on any pod created underr sts and it will sent traffic using hostname of pod. ie -0, -1, -2 etc.
