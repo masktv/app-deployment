@@ -10,4 +10,4 @@ spec:
     requests:
       storage: 1Gi  # Set according to application size
   volumeMode: Filesystem
-  volumeName: masktv-mysql-pv  # To Schedule this pvc on app pv [masktv-app-pv]
+  volumeName: db-config-pv  # To Schedule this pvc on app pv [masktv-app-pv]
