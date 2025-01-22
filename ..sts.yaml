@@ -106,10 +106,15 @@ spec:
           mountPath: /var/lib/mysql
         - name: db-log-pv
           mountPath: /var/log/mysql
+        - name: db-config-pv
+          mountPath: /etc/mysql
       volumes:
       - name: db-log-pv
         persistentVolumeClaim:
           claimName: db-log-pvc
+      - name: db-config-pv
+        persistentVolumeClaim:
+          claimName: db-config-pvc 
   volumeClaimTemplates:
   - metadata:
       name: masktv-mysql-pvc
