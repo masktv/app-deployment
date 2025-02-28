@@ -5,7 +5,7 @@ metadata:
   labels:
     app: masktv-app
 spec:
-  replicas: 5
+  replicas: 1
   selector:
     matchLabels:
       app: masktv-app
@@ -16,14 +16,12 @@ spec:
     spec:
       initContainers:
         - name: init-download-extract
-          image: amazonlinux:2  # Using Amazon Linux as the base image for AWS CLI
+          image: masktv/masktv:app  # Using Amazon Linux as the base image for AWS CLI
           command:
             - /bin/sh
             - -c
             - |
-              # Install AWS CLI and tar to handle extraction
-              yum install -y aws-cli tar && \
-              aws s3 cp s3://<your-bucket-name>/html.tar.gz /tmp/ && \
+              aws s3 cp s3://testing-image-html/html.tar.gz /tmp/ && \
               tar -xzf /tmp/html.tar.gz -C /tmp/ && \
               cp -r /tmp/html/* /var/www/html/ && \
               rm -rf /tmp/html && \
@@ -45,7 +43,7 @@ spec:
               mountPath: /var/www/html  # Mount PVC to init container to extract into this path
       containers:
         - name: masktv-app-container
-          image: <your-docker-image>  # Replace with your actual image
+          image: masktv/masktv:app  # Replace with your actual image
           imagePullPolicy: Always
           ports:
             - containerPort: 80
