@@ -1,0 +1,75 @@
+Cluster Creation And Worker set-up
+  --> create cluster with latest version i.e 1.31 with necessory plugins ebs-csi driver, vpc-cni, and CoreDNS, kube-proxy.
+      -> cluster Role Permission :
+          AmazonEC2ContainerRegistryPullOnly
+          AmazonEKSBlockStoragePolicy
+          AmazonEKSClusterPolicy
+          AmazonEKSComputePolicy
+          AmazonEKSLoadBalancingPolicy
+          AmazonEKSNetworkingPolicy
+          AmazonEKSWorkerNodeMinimalPolicy
+          
+  --> After Created cluster, Create access entry with User and give Policy of AmazonEKSClusterAdminPolicy.
+      -> Ensure user that attached to cluster must have neccessory policy attached or have AdministratorAccess.
+      
+  --> After Cluster status shows Active, Create Node-Group.
+      -> Ensure, Role Connected with Node Group have Neccessory Permission.
+         Permission of Role attached with Node-Group 
+           AmazonEBSCSIDriverPolicy
+           AmazonEC2ContainerRegistryPullOnly
+           AmazonEC2ContainerRegistryReadOnly
+           AmazonEC2FullAccess
+           AmazonEKS_CNI_Policy
+           AmazonEKSWorkerNodePolicy
+           AmazonElasticFileSystemFullAccess
+           CloudWatchAgentServerPolicy
+           CloudWatchLogsFullAccess
+  --> After Creation of Worker in Node-Group add Nessesory Security rule their
+      -> All TCP -- anywhere
+         Custom TCP -- 10250 -- anywhere
+  --> Attach EFS on Worker node /mnt path that we had created for make Applicate server and db server configuration file persisist.
+      -> Make Sure EFS contain Necessory file created and custome file copied in efs Dir
+           efs 
+           1. app
+               1. app-file
+               2. config-file
+                  --> all file with custom apache2.conf and all site setting file in sites-enable directory
+               3. log-file
+           2. db
+               1. config-file
+               2. log-file
+
+Jenkins Server Set-up --> EC2   
+  --> Install Neccesory Packages or Tool
+      1. Docker
+      2. Git
+      3. Jenkins
+  --> LogIn into Dockerhub to pull push Images
+  --> Install kubectl
+       -  curl -LO "https://dl.k8s.io/release/v1.26.0/bin/linux/amd64/kubectl"
+       -  chmod +x ./kubectl
+       -  sudo mv ./kubectl /usr/local/bin/kubectl
+       -  kubectl version --client 
+  --> Configure user on Jenkins server to perform Deployment task
+       - aws configure  --> you must have to configure same user thats entry you had created in cluster access entry
+  --> configure cluster on jenkins server
+       -  aws eks --region <region> update-kubeconfig --name <cluster-name>
+  --> Install Nginx Ingress Controller and ingress service on jenkins server to allow external acess.
+       Make Sure Ingress service must be LoadBalancer.
+  --> Attach new EFS to jenkins server at any Dir to store Backup of database by Running mysqldump Cammand and automate it via Cronjob.
+       make sure host used for mysqldump cmd should master pod dns.
+
+Jenkins UI set-up
+  MAke user below plugins are installed on Jenkins
+    - Pipeline-plugin
+    - git-plugin
+    - kubernetes-plugin
+    - docker plugin   
+  Create seperate pipeline for app and db deployment
+
+  .....................................................................................................................
+
+Application file download
+  --> Make bucket private  With bucket policy
+        Make sure bucket have permission to dowload and upload object.
+  --> Make one user with cli acesss and give policy only to list download and upload object in that perticular bucket.
