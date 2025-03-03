@@ -13,7 +13,7 @@ spec:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   local:
-    path: /mnt/EFS  # Path on all nodes
+    path: /mnt/efs/app/app-file  # Path on all nodes
   nodeAffinity:
     required:
       nodeSelectorTerms:
