@@ -27,7 +27,8 @@ Cluster Creation And Worker set-up
   --> After Creation of Worker in Node-Group add Nessesory Security rule their
       -> All TCP -- anywhere
          Custom TCP -- 10250 -- anywhere
-  --> Edit server metadata for efs csi driver to read without tocken
+  --> Edit server metadata for efs csi driver to read without token
+      after restart ebs-csi driver
   --> Attach EFS on Worker node /mnt path that we had created for make Applicate server and db server configuration file persisist.
       -> Make Sure EFS contain Necessory file created and custome file copied in efs Dir
            efs 
